@@ -46,7 +46,7 @@ function QuestionAnswerCard(props) {
     const { question, users, authedUser, id, klassName, match } = props
     const classes = useStyles();
     if (question === null) {
-      return <p>This Question doesn't exist</p>
+        return <p>This Question doesn't exist</p>
     }
 
     const author = question ? users[question.author] : null

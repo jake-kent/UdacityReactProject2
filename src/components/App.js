@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { handleInitialData } from '../actions/shared'
 
@@ -10,6 +10,7 @@ import Home from './Home'
 import Unauthed from './Unauthed'
 import AddQuestionView from './AddQuestionView'
 import QuestionAnswerView from './QuestionAnswerView'
+import Leaderboard from './Leaderboard'
 import FourOhFour from './404'
 
 function App(props) {
@@ -24,10 +25,13 @@ function App(props) {
                 ? <Unauthed />
                 : <div>
                     <Nav />
-                    <Route path='/' exact component={Home} />
-                    <Route path='/add' component={AddQuestionView} />
-                    <Route path='/questions/:id' component={QuestionAnswerView} />
-                    <Route component={FourOhFour} />
+                    <Switch>
+                        <Route path='/' exact component={Home} />
+                        <Route path='/add' component={AddQuestionView} />
+                        <Route path='/leaderboard' component={Leaderboard} />
+                        <Route path='/questions/:id' component={QuestionAnswerView} />
+                        <Route component={FourOhFour} />
+                    </Switch>
                 </div>
             }
         </Router>
