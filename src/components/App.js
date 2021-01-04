@@ -8,7 +8,9 @@ import { handleInitialData } from '../actions/shared'
 import Nav from './Nav'
 import Home from './Home'
 import Unauthed from './Unauthed'
+import AddQuestionView from './AddQuestionView'
 import QuestionAnswerView from './QuestionAnswerView'
+import FourOhFour from './404'
 
 function App(props) {
     useEffect(() => {
@@ -23,7 +25,9 @@ function App(props) {
                 : <div>
                     <Nav />
                     <Route path='/' exact component={Home} />
+                    <Route path='/add' component={AddQuestionView} />
                     <Route path='/questions/:id' component={QuestionAnswerView} />
+                    <Route component={FourOhFour} />
                 </div>
             }
         </Router>
