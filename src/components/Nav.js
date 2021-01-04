@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -34,7 +34,9 @@ function Nav(props) {
 
     const handleLogout = (e) => {
         e.preventDefault()
+        const { history } = props
         dispatch(setAuthedUser(null))
+        history.push('/')
     }
 
     return (
@@ -67,4 +69,4 @@ function mapStateToProps ({ authedUser, users }) {
     }
 }
 
-export default connect(mapStateToProps)(Nav)
+export default withRouter(connect(mapStateToProps)(Nav))

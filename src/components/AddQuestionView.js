@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 function AddQuestionView(props) {
     const [ optionOne, setOptionOne ] = useState('')
     const [ optionTwo, setOptionTwo ] = useState('')
-    const [ toHome, setToHome ] = useState(false)
     const classes = useStyles();
     const formComplete = optionOne !== '' && optionTwo !== ''
 
@@ -49,14 +48,10 @@ function AddQuestionView(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const { dispatch, authedUser } = props
+        const { dispatch, authedUser, history } = props
 
         dispatch(handleAddQuestion({optionOneText: optionOne, optionTwoText: optionTwo, author: authedUser}))
-        setToHome(true)
-    }
-
-    if (toHome === true) {
-        return <Redirect to='/' />
+        history.push('/')
     }
 
     return (
@@ -113,4 +108,4 @@ function mapStateToProps({authedUser}) {
     }
 }
 
-export default connect(mapStateToProps)(AddQuestionView)
+export default withRouter(connect(mapStateToProps)(AddQuestionView))

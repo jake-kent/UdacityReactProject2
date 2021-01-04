@@ -14,8 +14,9 @@ import Leaderboard from './Leaderboard'
 import FourOhFour from './404'
 
 function App(props) {
+    const { dispatch } = props
     useEffect(() => {
-        props.dispatch(handleInitialData())
+        dispatch(handleInitialData())
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (
