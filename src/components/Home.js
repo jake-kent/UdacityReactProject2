@@ -11,6 +11,9 @@ import TabPanel from './TabPanel'
 import QuestionAnswerCard from './QuestionAnswerCard'
 
 const useStyles = makeStyles((theme) => ({
+    tabBar: {
+        borderBottom: '1px solid black',
+    },
     tabPanelPaper: {
         padding: '20px',
     },
@@ -29,7 +32,7 @@ function Home(props) {
     return (
         <Grid container direction='row' justify='center'>
             <Grid item xs={11} md={10} lg={8}>
-                <Tabs centered={true} value={selectedTab} onChange={handleChange}>
+                <Tabs className={classes.tabBar} centered={true} value={selectedTab} onChange={handleChange}>
                     <Tab label="Unanswered" />
                     <Tab label="Answered" />
                 </Tabs>

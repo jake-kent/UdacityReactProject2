@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import { handleInitialData } from '../actions/shared'
 
+import Nav from './Nav'
 import Home from './Home'
 import Unauthed from './Unauthed'
 
@@ -19,6 +20,7 @@ function App(props) {
             {props.authedUser === null
                 ? <Unauthed />
                 : <div>
+                    <Nav />
                     <Route path='/' exact component={Home} />
                 </div>
             }
