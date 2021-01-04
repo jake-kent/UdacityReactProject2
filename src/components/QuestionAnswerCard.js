@@ -8,6 +8,8 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { handleAnswerQuestion } from '../actions/questions'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '20px',
@@ -22,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
         '& .chosen-icon': {
             display: 'none'
         }
+    },
+    cardHeader: {
+        margin: 0,
+    },
+    voteButton: {
+        marginBottom: '5px',
     },
     chosenChoice: {
         backgroundColor: 'rgba(119,221,119, 0.5)',
@@ -46,6 +54,16 @@ function QuestionAnswerCard(props) {
     const answered = question ? Object.keys(currentUser.answers).includes(id) : false
     const onDetailPage = match.path === '/questions/:id'
 
+    const handleVote = (e, choice) => {
+        e.preventDefault()
+        const { dispatch, question, authedUser } = props
+        dispatch(handleAnswerQuestion({
+            qid: question.id,
+            answer: choice,
+            authedUser
+        }))
+    }
+
     const LinkToDetailPage = ({buttonText}) => (
         <Link to={`/questions/${question.id}`}>
             <Button variant="contained" color="primary">
@@ -66,13 +84,13 @@ function QuestionAnswerCard(props) {
                 <h4>Results:</h4>
                 <Paper className={`${classes.resultsCard} ${currentUserChoice === 'optionOne' ? classes.chosenChoice : ''}`}>
                     <CheckCircleIcon className='chosen-icon' />
-                    <p>Would you rather {question.optionOne.text} {question.optionOne.text} {question.optionOne.text}?</p>
+                    <p>Would you rather {question.optionOne.text}?</p>
                     <LinearProgress variant="determinate" value={percentageOptionOne} />
                     <p>{`${votesOptionOne} out of ${totalVotes} votes`}</p>
                 </Paper>
                 <Paper className={`${classes.resultsCard} ${currentUserChoice === 'optionTwo' ? classes.chosenChoice : ''}`}>
                     <CheckCircleIcon className='chosen-icon' />
-                    <p>Would you rather {question.optionTwo.text} {question.optionTwo.text} {question.optionTwo.text}?</p>
+                    <p>Would you rather {question.optionTwo.text}?</p>
                     <LinearProgress variant="determinate" value={percentageOptionTwo} />
                     <p>{`${votesOptionTwo} out of ${totalVotes} votes`}</p>
                 </Paper>
@@ -82,7 +100,10 @@ function QuestionAnswerCard(props) {
     }
 
     const clickableChoices = (
-        <div>Todo</div>
+        <Grid container direction='column' alignItems='flex-start'>
+            <Button onClick={(e) => handleVote(e, "optionOne")} className={classes.voteButton} variant="contained">{question.optionOne.text}?</Button>
+            <Button onClick={(e) => handleVote(e, "optionTwo")} className={classes.voteButton} variant="contained">{question.optionTwo.text}?</Button>
+        </Grid>
     )
     const disabledChoices = (
         <>
@@ -103,6 +124,7 @@ function QuestionAnswerCard(props) {
 
     return (
         <Paper className={`${classes.root} ${klassName ? klassName : ''}`}>
+            <h4 className={classes.cardHeader}>{answered ? `Asked By ${author.name}` : `${author.name} Asks`}</h4>
             <Grid container direction='row'>
                 <Grid container justify='center' alignItems='center' item xs={12} md={4}>
                     { // eslint-disable-next-line jsx-a11y/img-redundant-alt

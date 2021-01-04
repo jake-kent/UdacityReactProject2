@@ -12,6 +12,7 @@ import QuestionAnswerCard from './QuestionAnswerCard'
 
 const useStyles = makeStyles((theme) => ({
     tabBar: {
+        marginTop: '20px',
         borderBottom: '1px solid black',
     },
     tabPanelPaper: {
